@@ -4,11 +4,11 @@ A collection of foundational network security and red teaming tools built from t
 
 ---
 
-## 🚫 No-AI Manifesto
+## 🚫 No-AI Manifesto (EXCEPT README - because I'm bad with words!!)
 
 Every line of logic, packet structure, and implementation in this repository was written **entirely by human hands** (my hands ofc). 
 
-While AI tools are excellent for automation, true mastery of network security requires wrestling with sockets, byte order, and protocol quirks manually. To ensure deep comprehension, **no LLMs or AI assistants were used to generate the core code or logic** in this project (except this readme... lol). It is 100% organic, hand-crafted code.
+While AI tools are excellent for automation, true mastery of network security requires wrestling with sockets, byte order, and protocol quirks manually. To ensure deep comprehension, **no LLMs or AI assistants were used to generate the core code or logic** in this project. It is 100% organic, hand-crafted code.
 
 ---
 
