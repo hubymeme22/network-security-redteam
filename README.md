@@ -29,7 +29,7 @@ This checklist tracks my progress as I build out the repository. It moves from b
 
 - [X] **ARP Spoofer** - Basic Man-in-the-Middle utility via cache poisoning.
 - [X] **DNS Sniffer** - Intercepting DNS requests on a local network and display site queries.
-- [ ] **Network Scanner** - Method for scanning network through ARP broadcasting, this can also be used for checking vulnerability of the network.
+- [X] **Network Scanner** - Method for scanning network through ARP broadcasting, this can also be used for checking vulnerability of the network.
 - [ ] **Packet Sniffer & Credentials Extractor** - A tool to parse raw network traffic and extract sensitive unencrypted data (HTTP, FTP, etc.).
 - [ ] **Custom C2 (Command & Control) Beacon** - A primitive reverse-shell framework utilizing custom encoding/encryption over TCP/UDP.
 - [ ] **Different SSL Stripping methods** - Will cover a lot of experimental (my research) [sslstriping](https://www.cyberark.com/what-is/ssl-stripping-attacks/) methods starting from basic [sslstrip](https://www.cyberark.com/what-is/ssl-stripping-attacks/) methods to advanced chained methods to perform complex credential harvesting methods
