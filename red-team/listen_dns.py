@@ -1,11 +1,14 @@
 from scapy.all import sniff
 from networklib.dns import intercept_dns_query
 
-TARGET_IP = "192.168.100.57"
+import sys
 
 def main():
-    print("[*] Starting DNS passive sniffing...")
-    sniff(filter=f"src host {TARGET_IP} and udp",prn=intercept_dns_query, store=0)
+    if len(sys.argv) > 1:
+        print("[*] Starting DNS passive sniffing...")
+        sniff(filter=f"src host {sys.argv[1]} and udp",prn=intercept_dns_query, store=0)
+    else:
+        print("Usage: listen_dns.py <target_ip_address>")
 
 if __name__ == "__main__":
     main()
