@@ -28,7 +28,7 @@ def scan_network(ip_range: str):
         if mac_addr is not None:
             print(f"active address! with mac-address of '{mac_addr}'")
         else:
-            print()
+            print("Not Reachable")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
