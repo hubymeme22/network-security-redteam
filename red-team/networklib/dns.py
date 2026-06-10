@@ -2,8 +2,9 @@ from scapy.layers.inet import IP
 from scapy.layers.dns import DNS, DNSQR
 from scapy.packet import Packet
 
+global_scanned = set()
 
-def intercept_dns_query(packet: Packet):
+def intercept_dns_query(packet: Packet, exclude_repeat: bool = True):
     if packet.haslayer(DNS):
         dns_layer: DNS = packet.getlayer(DNS)
         ip_layer: IP = packet.getlayer(IP)
@@ -13,4 +14,12 @@ def intercept_dns_query(packet: Packet):
         if dns_layer.qr == 0:
             dns_query: bytes = packet[DNSQR].qname
             query_name = dns_query.decode('utf-8')
+
+            if exclude_repeat:
+                if query_name not in global_scanned:
+                    global_scanned.add(query_name)
+                else:
+                    return
+
+
             print(f"[{ip_layer.src}] DNS Query for: {query_name}")
