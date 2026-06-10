@@ -1,5 +1,5 @@
 from scapy.all import sniff
-from networklib.dns import intercept_dns_query
+from networklib.network_callbacks import intercept_dns_query
 
 import sys
 
