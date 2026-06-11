@@ -40,7 +40,8 @@ def intercept_http_requests(packet: Packet):
                 "POST" in raw_packet_string or \
                 "HEAD" in raw_packet_string or \
                 "DELETE" in raw_packet_string or \
-                "PUT" in raw_packet_string:
+                "PUT" in raw_packet_string or \
+                "HTTP" in raw_packet_string:
                 print(f"[{ip_layer.src}] Potetial HTTP Packet Detected ==>", http_layer)
                 print(raw_packet_string)
 
