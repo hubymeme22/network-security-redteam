@@ -1,5 +1,4 @@
 from io import FileIO
-from networklib.utils.parser_utils import parse_http_request
 from networklib.utils.parser_utils import unencrypted_packet_capture
 from scapy.layers.dns import DNS, DNSQR
 from scapy.layers.inet import IP, TCP
