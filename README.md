@@ -18,6 +18,7 @@ While AI tools are excellent for automation, true mastery of network security re
 | :--- | :--- | :--- |
 | **ARP Spoofer** | Man-in-the-Middle utility to redirect localized traffic via cache poisoning. | Scapy, ARP, Layer 2 Routing |
 | **DNS Traffic Sniffing** | A simple dns sniffing tool that can be used in network to monitor site requests | Scapy, DNS |
+| **Unencrypted Traffic Sniffing** | A simple active credential sniffing tool for unencrypted traffic in your network (**strictly for your network lab use only**) | Scapy, TCP, TELNET, SMTP, FTP |
 
 
 ### 🔮 P.S. Future Proofing & Modularization
