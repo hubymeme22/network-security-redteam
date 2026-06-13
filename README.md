@@ -23,6 +23,37 @@ While AI tools are excellent for automation, true mastery of network security re
 | **Unencrypted Traffic Sniffing** | A simple active credential sniffing tool for unencrypted traffic in your network (**strictly for your network lab use only**) | Scapy, TCP, TELNET, SMTP, FTP |
 
 
+## ⚙️ Installation & Setup
+
+These tools target **Debian/Ubuntu-based Linux** and require root privileges (raw sockets, ARP cache manipulation, and `netfilterqueue` all need elevated access).
+
+```bash
+git clone https://github.com/hubymeme22/network-security-redteam
+cd network-security-redteam/red-team
+chmod +x setup.sh
+./setup.sh
+```
+
+`setup.sh` will:
+1. Update apt package lists.
+2. Install the system packages needed to build `netfilterqueue` (`build-essential`, `python3-dev`, `libnetfilter-queue-dev`, `libnfnetlink-dev`).
+3. Install the Python dependencies from `requirements.txt`.
+
+> 💡 It's recommended to run this inside a Python virtual environment (`python3 -m venv venv && source venv/bin/activate`) before installing the Python packages — note that the scripts themselves will still need to be run with `sudo`/root.
+
+## 📦 Dependencies
+
+**System packages (installed via apt):**
+- `build-essential`
+- `python3-dev`
+- `libnetfilter-queue-dev`
+- `libnfnetlink-dev`
+
+**Python packages (`red-team/requirements.txt`):**
+- `scapy==2.7.0` — packet crafting, sniffing, and ARP manipulation
+- `cython==3.2.5` — build dependency for `netfilterqueue`
+- `netfilterqueue==1.1.0` — userspace packet interception via NFQUEUE (used for traffic redirection)
+
 ### 🔮 P.S. Future Proofing & Modularization
 Looking ahead, my goal is to refactor these scripts into a highly customizable, unified framework. In the near future, I plan to abstract the core packet-crafting logic into a reusable, custom module. This will allow anyone to easily import these network utilities and build bespoke security tooling on top of them without rewriting the boilerplate.
 
