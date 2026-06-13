@@ -6,10 +6,10 @@ import time
 
 cache_mac_table = {}
 
-def custom_get_mac(target_ip: str) -> str:
+def custom_get_mac(target_ip: str, perform_cache: bool = True) -> str:
     global cache_mac_table
 
-    if target_ip in cache_mac_table:
+    if target_ip in cache_mac_table and perform_cache:
         print("[debug] cached mac found... returning cache")
         return cache_mac_table[target_ip]
 
@@ -22,7 +22,8 @@ def custom_get_mac(target_ip: str) -> str:
 
     # Loop through the answers to find the MAC address
     for _, received in ans:
-        cache_mac_table[target_ip] = received.hwsrc
+        if perform_cache:
+            cache_mac_table[target_ip] = received.hwsrc
         return received.hwsrc
 
     return None

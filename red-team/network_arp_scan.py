@@ -1,6 +1,8 @@
 from networklib.arpspoof import getmacbyip
+from networklib.arpspoof import custom_get_mac
 
-import sys
+import argparse
+import os
 
 def ip_range_parser(ip_range: str) -> list[str]:
     """
@@ -26,12 +28,36 @@ def scan_network(ip_range: str):
         mac_addr = getmacbyip(ip_addr)
         print(f"[*] Testing address '{ip_addr}'...", end=" ")
         if mac_addr is not None:
+            mac_addr = custom_get_mac(ip_addr, perform_cache=False)
+
+        if mac_addr is not None:
             print(f"active address! with mac-address of '{mac_addr}'")
         else:
             print("Not Reachable")
 
+def main():
+    #######################
+    #  Parser definition  #
+    #######################
+    parser = argparse.ArgumentParser(
+        description="Simple local network scanner through arp request"
+    )
+
+    parser.add_argument(
+        "target_ip_range", 
+        help="The range of IP address to be scanned (ex. 192.168.100.1-20)"
+    )
+
+    args = parser.parse_args()
+
+    ################################
+    #  Main logic for the process  #
+    ################################
+    if os.getuid() != 0:
+        print("[-] This needs to run as root")
+        exit(1)
+
+    scan_network(args.target_ip_range)
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: network_arp_scan.py <ip_range>")
-        exit()
-    scan_network(sys.argv[1])
+    main()

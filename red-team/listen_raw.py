@@ -3,6 +3,7 @@ from scapy.packet import Packet
 from networklib.network_callbacks import intercept_raw_packets
 
 import argparse
+import os
 
 class PacketLogger:
     def __init__(self, log_path=None):
@@ -53,6 +54,10 @@ def main():
     ################################
     #  Main logic for the process  #
     ################################
+    if os.getuid() != 0:
+        print("[-] This needs to run as root")
+        exit(1)
+
     if args.filter:
         bpf_filter = args.filter
         print(f"[*] Starting custom active sniffing with filter: '{bpf_filter}'")
