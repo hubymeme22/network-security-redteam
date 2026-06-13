@@ -1,6 +1,12 @@
+from networklib.utils.parser_utils import parse_http_request
+from networklib.utils.parser_utils import unencrypted_packet_capture
 from scapy.layers.dns import DNS, DNSQR
 from scapy.layers.inet import IP, TCP
 from scapy.packet import Packet, Raw
+from typing import Callable
+
+import json
+
 
 global_scanned = set()
 
@@ -25,23 +31,25 @@ def intercept_dns_query(packet: Packet, exclude_repeat: bool = True):
             print(f"[{ip_layer.src}] DNS Query for: {query_name}")
 
 
-def intercept_http_requests(packet: Packet):
-    ip_layer: IP = packet.getlayer(IP)
-
+def intercept_raw_packets(packet: Packet, action: Callable[[dict, Packet], None] = None):
+    """
+    flexible callback for catching raw unencrypted traffic in the
+    network and a designed callback for programmability (is this even a word?)
+    """
     if packet.haslayer(TCP) and packet.haslayer(Raw):
-        http_layer: Packet = packet[TCP]
         raw_layer: Packet = packet[Raw]
-
-        # check the raw content layer
         raw_packet: str = raw_layer.load
         if raw_packet is not None:
-            raw_packet_string = raw_packet.decode('utf-8', errors='ignore')
-            if "GET" in raw_packet_string or \
-                "POST" in raw_packet_string or \
-                "HEAD" in raw_packet_string or \
-                "DELETE" in raw_packet_string or \
-                "PUT" in raw_packet_string or \
-                "HTTP" in raw_packet_string:
-                print(f"[{ip_layer.src}] Potetial HTTP Packet Detected ==>", http_layer)
-                print(raw_packet_string)
+            packet_parsed_contents = unencrypted_packet_capture(packet)
+            if packet_parsed_contents is None:
+                return
+
+            if action is not None:
+                action(packet_parsed_contents, packet)
+
+            # if no action specified, packet will just be printed
+            else:
+                print("Packet Detected:")
+                print(json.dumps(packet_parsed_contents, indent=2))
+                print()
 
