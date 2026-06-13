@@ -1,3 +1,4 @@
+from io import FileIO
 from networklib.utils.parser_utils import parse_http_request
 from networklib.utils.parser_utils import unencrypted_packet_capture
 from scapy.layers.dns import DNS, DNSQR
@@ -6,7 +7,6 @@ from scapy.packet import Packet, Raw
 from typing import Callable
 
 import json
-
 
 global_scanned = set()
 
@@ -31,7 +31,7 @@ def intercept_dns_query(packet: Packet, exclude_repeat: bool = True):
             print(f"[{ip_layer.src}] DNS Query for: {query_name}")
 
 
-def intercept_raw_packets(packet: Packet, action: Callable[[dict, Packet], None] = None):
+def intercept_raw_packets(packet: Packet, log_fp: FileIO = None, action: Callable[[dict, Packet], None] = None):
     """
     flexible callback for catching raw unencrypted traffic in the
     network and a designed callback for programmability (is this even a word?)
@@ -47,9 +47,13 @@ def intercept_raw_packets(packet: Packet, action: Callable[[dict, Packet], None]
             if action is not None:
                 action(packet_parsed_contents, packet)
 
-            # if no action specified, packet will just be printed
-            else:
-                print("Packet Detected:")
-                print(json.dumps(packet_parsed_contents, indent=2))
-                print()
+            # terminal log
+            print("Packet Detected:")
+            print(json.dumps(packet_parsed_contents, indent=2))
+            print()
+
+            # save logs to disk if log_fileio is specified
+            # global_logs.append(packet_parsed_contents)
+            if log_fp is not None:
+                log_fp.write(json.dumps(packet_parsed_contents) + "\n")
 
