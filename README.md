@@ -2,6 +2,8 @@
 
 A collection of foundational network security and red teaming tools built from the ground up. This repository serves as a practical, hands-on compilation of network mechanics, protocol manipulation, and security concepts explored through raw code.
 
+> ⚠️ **Disclaimer:** This repository is intended **strictly for educational purposes**. The tools provided here are meant for use in controlled lab environments, on networks you own, or with explicit authorization. Do not use these tools against networks or systems you do not have permission to test.
+
 ---
 
 ## 🚫 No-AI Manifesto (EXCEPT README - because I'm bad with words!!)
